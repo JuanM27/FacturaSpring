@@ -5,6 +5,7 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,5 +63,22 @@ public class DemandController {
     Demand demand = demandRepository.findById(demandId)
         .orElseThrow(() -> new ResourceNotFoundException("User not found on : " + demandId));
     return ResponseEntity.ok().body(demand);
+  }
+
+  // Delete
+
+  @DeleteMapping(path = "/{idDemand}")
+  public @ResponseBody String deleteDemand(@PathVariable("idDemand") Long demandId) {
+    demandRepository.deleteById(demandId);
+    return String.format("Demand %d deleted", demandId);
+
+    // You can add the option of returning the deleted user just in case if you want to create some
+    // sort of backup
+  }
+
+  @GetMapping(path = "/all")
+  public @ResponseBody Iterable<Demand> getAllDemands() {
+    // This returns a JSON or XML with the users
+    return demandRepository.findAll();
   }
 }

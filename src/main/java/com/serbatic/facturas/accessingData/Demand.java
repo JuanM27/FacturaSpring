@@ -16,7 +16,7 @@ public class Demand {
 
   private String date;
 
-  private boolean invoiced;
+  private boolean invoiced=false;
 
   @ManyToOne
   @JoinColumn(name = "user_id")
