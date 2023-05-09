@@ -5,7 +5,7 @@ import com.serbatic.facturas.accessingData.User;
 
 public interface UserServiceInterface {
 
-  User addNewUser(String name, String irstSurname, String secondSurname, String email);
+  User addNewUser(String name, String firstSurname, String secondSurname, String email);
 
   User updateUserPartially(Long userId, User userDetails) throws ResourceNotFoundException;
 
