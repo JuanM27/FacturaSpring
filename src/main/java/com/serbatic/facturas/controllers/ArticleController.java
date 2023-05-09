@@ -38,7 +38,7 @@ public class ArticleController {
     return "Article saved with id "+savedArticle.getId();
   }
 
-  @PatchMapping(path = "/{id}") // Map ONLY PATCH Requests
+  @PatchMapping(path = "/{idArt}") // Map ONLY PATCH Requests
   public ResponseEntity<Article> updateArticlePartially(
       @PathVariable(value = "idArt") Long artcleId, @RequestBody Article articleDetails)
       throws ResourceNotFoundException {
@@ -47,7 +47,7 @@ public class ArticleController {
   }
 
   // This returns a json with the article information
-  @GetMapping(path = "/{id}")
+  @GetMapping(path = "/{idArt}")
   public ResponseEntity<Article> findArticle(@PathVariable(value = "idArt") Long articleId)
       throws ResourceNotFoundException {
    Article article=articleService.findArticle(articleId);
@@ -56,7 +56,7 @@ public class ArticleController {
 
   // Delete
 
-  @DeleteMapping(path = "/{id}")
+  @DeleteMapping(path = "/{idArt}")
   public @ResponseBody String deleteArticle(@PathVariable("idArt") Long id) {
     articleService.deleteArticle(id);
     return String.format("Article %d deleted", id);

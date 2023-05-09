@@ -32,7 +32,7 @@ public class InvoiceController {
         return "Invoice saved with id " + savedInvoice.getIdInvoice();
     }
 
-        @PatchMapping(path = "/{id}") // Map ONLY PATCH Requests
+        @PatchMapping(path = "/{idInv}") // Map ONLY PATCH Requests
         public ResponseEntity<Invoice> updateInvoicePartially(
                 @PathVariable(value = "idInv") Long invoiceId, @RequestBody Invoice invDetails)
       throws ResourceNotFoundException {
@@ -41,7 +41,7 @@ public class InvoiceController {
         }
 
     // This returns a json with the article information
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/{idInv}")
     public ResponseEntity<Invoice> findInvoice(@PathVariable(value = "idInv") Long invoiceId)
             throws ResourceNotFoundException {
         Invoice invoice=invoiceService.findInvoice(invoiceId);
@@ -50,7 +50,7 @@ public class InvoiceController {
 
     // Delete
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/{idInv}")
     public @ResponseBody String deleteInvoice(@PathVariable("idInv") Long id) {
         invoiceService.deleteInvoice(id);
         return String.format("Invoice %d deleted", id);

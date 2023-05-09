@@ -1,15 +1,17 @@
 package com.serbatic.facturas.service;
 
-import com.serbatic.facturas.accessingData.DemArt;
+import com.serbatic.facturas.accessingData.*;
 import org.apache.velocity.exception.ResourceNotFoundException;
 
 public interface DemArtServiceInterface {
 
-    DemArt updateDemArtPartially(Long userId, DemArt userDetails) throws ResourceNotFoundException;
+    DemArt addNewDemArt(Article art, Demand dem, int amount);
 
-    DemArt findDemArt(Long userId) throws ResourceNotFoundException;
+    DemArt updateDemArtPartially(DemArtKey demArtKey, DemArt demArtDetails) throws ResourceNotFoundException;
 
-    void deleteEmployee(Long id);
+    DemArt findDemArt(DemArtKey demArtId) throws ResourceNotFoundException;
+
+    void deleteDemArt(DemArtKey id);
 
     Iterable<DemArt> getAllDemArts();
 }
