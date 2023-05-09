@@ -10,18 +10,18 @@ public class DemArt {
 
     @ManyToOne
     @MapsId("idDemand")
-    @JoinColumn(name="idDemand")
+    @JoinColumn(name="id_demand")
     Demand demand;
+
 
     @ManyToOne
     @MapsId("idArt") //Sirve para indicar que forma parte de una PK compuesta
-    @JoinColumn(name="idArt")
+    @JoinColumn(name="id_art")
     Article article;
-
     private int amount;
 
     public Article getArticle() {
-        return article;
+        return this.article;
     }
 
     public void setArticle(Article article) {
@@ -37,10 +37,18 @@ public class DemArt {
     }
 
     public int getAmount() {
-        return amount;
+        return this.amount;
     }
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public DemArtKey getId() {
+        return id;
+    }
+
+    public void setId(DemArtKey id) {
+        this.id = id;
     }
 }

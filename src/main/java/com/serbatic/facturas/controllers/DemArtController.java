@@ -16,11 +16,11 @@ public class DemArtController {
     private DemArtService demArtService;
 
     @PostMapping(path = "/add")
-    public @ResponseBody String addnewDemArt(@RequestParam Article art,
-                                             @RequestParam Demand demand, @RequestParam String secondSurname,
+    public @ResponseBody String addnewDemArt(@RequestParam long artId,
+                                             @RequestParam long demandId,
                                              @RequestParam int amount) {
-        DemArt savedDemArt = demArtService.addNewDemArt(art, demand, amount);
-        return amount + " of " + art.getName() + "saved in demand with id " + savedDemArt.getDemand().getId();
+        DemArt savedDemArt = demArtService.addNewDemArt(artId, demandId, amount);
+        return "DemArt saved with "+savedDemArt.getAmount()+" articles with id "+savedDemArt.getArticle().getId()+" in demand with id "+savedDemArt.getDemand().getId();
     }
 
     @PatchMapping(path = "/{id}")

@@ -5,7 +5,7 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 
 public interface DemArtServiceInterface {
 
-    DemArt addNewDemArt(Article art, Demand dem, int amount);
+    DemArt addNewDemArt(Long art, Long dem, int amount);
 
     DemArt updateDemArtPartially(DemArtKey demArtKey, DemArt demArtDetails) throws ResourceNotFoundException;
 
