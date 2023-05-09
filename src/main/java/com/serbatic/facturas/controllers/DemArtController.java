@@ -7,15 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.serbatic.facturas.accessingData.Article;
 import com.serbatic.facturas.accessingData.DemArt;
 import com.serbatic.facturas.accessingData.DemArtKey;
-import com.serbatic.facturas.accessingData.Demand;
 import com.serbatic.facturas.service.DemArtService;
 
 @Controller
@@ -25,14 +21,6 @@ public class DemArtController {
   @Autowired
   private DemArtService demArtService;
 
-  @PostMapping(path = "/add")
-  public @ResponseBody String addnewDemArt(@RequestParam Article art, @RequestParam Demand demand,
-      @RequestParam int amount) {
-    DemArt savedDemArt = demArtService.addNewDemArt(art, demand, amount);
-    return amount + " of " + art.getName() + "saved in demand with id "
-        + savedDemArt.getDemand().getId();
-
-  }
 
 
   @PatchMapping(path = "/{id}")

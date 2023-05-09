@@ -6,9 +6,5 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class DemArtKey implements Serializable {
 
-  private static final long serialVersionUID = 1L;
-
-
-
 }
 

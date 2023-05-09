@@ -10,12 +10,23 @@ public class DemArtService implements DemArtServiceInterface{
     @Autowired
     private DemArtRepository demArtRepository;
 
+    @Autowired
+    private DemandService demandService;
+    @Autowired
+    private ArticleService articleService;
+
     @Override
-    public DemArt addNewDemArt(Article art, Demand dem, int amount) {
+    public DemArt addNewDemArt(Long art, Long demId, int amount) {
         DemArt demArt=new DemArt();
-        demArt.setDemand(dem);
-        demArt.setArticle(art);
+        Demand demand = demandService.findDemand(demId);
+        Article article = articleService.findArticle(art);
         demArt.setAmount(amount);
+        demArt.setArticle(article);
+        demArt.setDemand(demand);
+        DemArtKey demArtKey=new DemArtKey();
+        demArtKey.setIdArt(article.getId());
+        demArtKey.setIdDemand(demand.getId());
+        demArt.setId(demArtKey);
         return demArtRepository.save(demArt);
     }
 
