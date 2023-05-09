@@ -27,10 +27,18 @@ public class UserService implements UserServiceInterface {
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new ResourceNotFoundException("User not found on :: " + userId));
 
-    user.setName(userDetails.getName());
-    user.setFirstSurname(userDetails.getFirstSurname());
-    user.setSecondSurname(userDetails.getSecondSurname());
-    user.setEmail(userDetails.getEmail());
+    if(userDetails.getName()!=null){
+      user.setName(userDetails.getName());
+    }
+    if(userDetails.getFirstSurname()!=null){
+      user.setFirstSurname(userDetails.getFirstSurname());
+    }
+    if(userDetails.getSecondSurname()!=null){
+      user.setSecondSurname(userDetails.getSecondSurname());
+    }
+    if(userDetails.getEmail()!=null){
+      user.setEmail(userDetails.getEmail());
+    }
 
     return userRepository.save(user);
   }

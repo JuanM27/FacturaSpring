@@ -1,5 +1,6 @@
 package com.serbatic.facturas.controllers;
 
+import com.serbatic.facturas.service.ArticleService;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,35 +27,22 @@ public class ArticleController {
   }
 
   @Autowired
-  private ArticleRepository articleRepository;
+  private ArticleService articleService;
 
   @PostMapping(path = "/add") // Map ONLY POST Requests
   public @ResponseBody String addNewArticle(@RequestParam String name,
       @RequestParam String category, @RequestParam int stock, @RequestParam double price) {
     // @ResponseBody means the returned String is the response, not a view name
     // @RequestParam means it is a parameter from the GET or POST request
-
-    Article n = new Article();
-    n.setName(name);
-    n.setCategory(category);
-    n.setStock(stock);
-    n.setPrice(price);
-    articleRepository.save(n);
-    return "Article saved";
+    Article savedArticle= articleService.addNewArticle(name,category,stock,price);
+    return "Article saved with id "+savedArticle.getId();
   }
 
   @PatchMapping(path = "/{id}") // Map ONLY PATCH Requests
   public ResponseEntity<Article> updateArticlePartially(
       @PathVariable(value = "idArt") Long artcleId, @RequestBody Article articleDetails)
       throws ResourceNotFoundException {
-    Article article = articleRepository.findById(artcleId)
-        .orElseThrow(() -> new ResourceNotFoundException("Article not found on :: " + artcleId));
-
-    article.setName(articleDetails.getName());
-    article.setCategory(articleDetails.getCategory());
-    article.setStock(articleDetails.getStock());
-    article.setPrice(articleDetails.getPrice());
-    final Article updatedArticle = articleRepository.save(article);
+    Article updatedArticle = articleService.updateArticlePartially(artcleId,articleDetails);
     return ResponseEntity.ok(updatedArticle);
   }
 
@@ -62,16 +50,15 @@ public class ArticleController {
   @GetMapping(path = "/{id}")
   public ResponseEntity<Article> findArticle(@PathVariable(value = "idArt") Long articleId)
       throws ResourceNotFoundException {
-    Article article = articleRepository.findById(articleId)
-        .orElseThrow(() -> new ResourceNotFoundException("Article not found on : " + articleId));
-    return ResponseEntity.ok().body(article);
+   Article article=articleService.findArticle(articleId);
+      return ResponseEntity.ok().body(article);
   }
 
   // Delete
 
   @DeleteMapping(path = "/{id}")
   public @ResponseBody String deleteArticle(@PathVariable("idArt") Long id) {
-    articleRepository.deleteById(id);
+    articleService.deleteArticle(id);
     return String.format("Article %d deleted", id);
 
     // You can add the option of returning the deleted article just in case if you want to create
@@ -80,9 +67,9 @@ public class ArticleController {
   }
 
   @GetMapping(path = "/all")
-  public @ResponseBody Iterable<Article> getAllUsers() {
+  public @ResponseBody Iterable<Article> getAllArticles() {
     // This returns a JSON or XML with the articles
-    return articleRepository.findAll();
+    return articleService.getAllArticles();
   }
 
 
