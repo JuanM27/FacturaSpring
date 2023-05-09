@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 @Entity
 public class DemArt {
-
     @EmbeddedId
     DemArtKey id;
 
@@ -19,6 +18,16 @@ public class DemArt {
     @JoinColumn(name="id_art")
     Article article;
     private int amount;
+
+    public DemArt(Article art, Demand dem){
+        this.article=art;
+        this.demand=dem;
+    }
+
+    public DemArt() {
+
+    }
+
 
     public Article getArticle() {
         return this.article;

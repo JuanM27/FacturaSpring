@@ -32,12 +32,22 @@ public class DemArtController {
 
 
     // This returns a json with the user information
-    @GetMapping(path = "/{id}")
+    /*@GetMapping(path = "/{id}")
     public ResponseEntity<DemArt> findDemArt(@PathVariable(value = "id") DemArtKey id)
             throws ResourceNotFoundException {
         DemArt demArt = demArtService.findDemArt(id);
         return ResponseEntity.ok().body(demArt);
+    }*/
+    @GetMapping(path = "/{demandId}/{articleId}")
+    public ResponseEntity<DemArt> findDemArt(
+            @PathVariable(value = "demandId") String demandId,
+            @PathVariable (value="articleId") String articleId)
+        throws ResourceNotFoundException{
+        DemArtKey id = new DemArtKey(Long.valueOf(demandId),Long.valueOf(articleId));
+        DemArt demArt = demArtService.findDemArt(id);
+        return ResponseEntity.ok().body(demArt);
     }
+
 
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<DemArt> getAllDemArts() {
