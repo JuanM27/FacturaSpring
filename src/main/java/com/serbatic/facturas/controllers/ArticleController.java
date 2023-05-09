@@ -1,6 +1,5 @@
 package com.serbatic.facturas.controllers;
 
-import com.serbatic.facturas.service.ArticleService;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.serbatic.facturas.accessingData.Article;
-import com.serbatic.facturas.accessingData.ArticleRepository;
+import com.serbatic.facturas.service.ArticleService;
 
 @Controller
 @RequestMapping(path = "/article") // This means URL's start with /demo (after Application path)
@@ -34,29 +33,29 @@ public class ArticleController {
       @RequestParam String category, @RequestParam int stock, @RequestParam double price) {
     // @ResponseBody means the returned String is the response, not a view name
     // @RequestParam means it is a parameter from the GET or POST request
-    Article savedArticle= articleService.addNewArticle(name,category,stock,price);
-    return "Article saved with id "+savedArticle.getId();
+    Article savedArticle = articleService.addNewArticle(name, category, stock, price);
+    return "Article saved with id " + savedArticle.getId();
   }
 
-  @PatchMapping(path = "/{id}") // Map ONLY PATCH Requests
+  @PatchMapping(path = "/{idArt}") // Map ONLY PATCH Requests
   public ResponseEntity<Article> updateArticlePartially(
       @PathVariable(value = "idArt") Long artcleId, @RequestBody Article articleDetails)
       throws ResourceNotFoundException {
-    Article updatedArticle = articleService.updateArticlePartially(artcleId,articleDetails);
+    Article updatedArticle = articleService.updateArticlePartially(artcleId, articleDetails);
     return ResponseEntity.ok(updatedArticle);
   }
 
   // This returns a json with the article information
-  @GetMapping(path = "/{id}")
+  @GetMapping(path = "/{idArt}")
   public ResponseEntity<Article> findArticle(@PathVariable(value = "idArt") Long articleId)
       throws ResourceNotFoundException {
-   Article article=articleService.findArticle(articleId);
-      return ResponseEntity.ok().body(article);
+    Article article = articleService.findArticle(articleId);
+    return ResponseEntity.ok().body(article);
   }
 
   // Delete
 
-  @DeleteMapping(path = "/{id}")
+  @DeleteMapping(path = "/{idArt}")
   public @ResponseBody String deleteArticle(@PathVariable("idArt") Long id) {
     articleService.deleteArticle(id);
     return String.format("Article %d deleted", id);
