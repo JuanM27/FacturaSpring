@@ -1,16 +1,14 @@
 package com.serbatic.facturas.accessingData;
 
-import jakarta.persistence.Column;
+import java.io.Serializable;
 import jakarta.persistence.Embeddable;
 
-import java.io.Serializable;
-
 @Embeddable
-
 public class DemArtKey implements Serializable {
-    @Column(name="idDemand")
-    long idDemand;
 
-    @Column(name="idArt")
-    long idArt;
+  private static final long serialVersionUID = 1L;
+
+
+
 }
+

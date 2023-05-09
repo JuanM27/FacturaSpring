@@ -1,7 +1,7 @@
 package com.serbatic.facturas.accessingData;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DemArtRepository extends CrudRepository<DemArt,DemArtKey> {
+public interface DemArtRepository extends JpaRepository<DemArt, DemArtKey> {
 
 }
