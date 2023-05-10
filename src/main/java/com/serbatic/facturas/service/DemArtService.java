@@ -17,8 +17,20 @@ public class DemArtService implements DemArtServiceInterface{
 
     @Override
     public DemArt addNewDemArt(Long art, Long demId, int amount) {
-        DemArt demArt=new DemArt(articleService.findArticle(art),demandService.findDemand(demId));
-        demArt.setAmount(amount);
+        if (amount <=0){
+            System.out.println("Error, amount cannot be 0");
+            return null;
+        }
+        Article article=articleService.findArticle(art);
+        DemArt demArt=new DemArt(article,demandService.findDemand(demId));
+        //consultar la cantidad disponible, si no hay suficiente error
+        if(article.getStock()>=amount){
+            demArt.setAmount(amount);
+            article.setStock(article.getStock()-amount);
+        }else{
+            System.out.println( "Cannot add because there are only "+article.getStock()+" of "+ article.getName()+" in stock");
+            return null;
+        }
         DemArtKey demArtKey=new DemArtKey(demArt.getDemand().getId(),demArt.getArticle().getId());
         demArt.setId(demArtKey);
         return demArtRepository.save(demArt);
@@ -56,4 +68,5 @@ public class DemArtService implements DemArtServiceInterface{
     public Iterable<DemArt> getAllDemArts() {
         return demArtRepository.findAll();
     }
+    
 }

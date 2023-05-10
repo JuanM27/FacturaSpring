@@ -20,16 +20,31 @@ public class DemArtController {
                                              @RequestParam long demandId,
                                              @RequestParam int amount) {
         DemArt savedDemArt = demArtService.addNewDemArt(artId, demandId, amount);
+        if(savedDemArt==null){
+            return "Cannot save DemArt because the amount is not valid";
+        }
         return "DemArt saved with "+savedDemArt.getAmount()+" articles with id "+savedDemArt.getArticle().getId()+" in demand with id "+savedDemArt.getDemand().getId();
     }
 
-    @PatchMapping(path = "/{id}")
+    //Marco's VERSION:
+
+    /*@PatchMapping(path = "/{id}")
     public ResponseEntity<DemArt> updateDemArtPartially(@PathVariable(value = "id") DemArtKey id,
                                                     @RequestBody DemArt demArtDetails) throws ResourceNotFoundException {
         DemArt updatedDemArt = demArtService.updateDemArtPartially(id, demArtDetails);
         return ResponseEntity.ok(updatedDemArt);
-    }
+    }*/
 
+
+    //Juan's VERSION:
+    @PatchMapping(path = "/{idDemArt}")
+    public ResponseEntity<DemArt> updateDemArtPartially(@PathVariable(value = "idDemArt") String id,
+                                                        @RequestBody DemArt demArtDetails) throws ResourceNotFoundException {
+        String[] parts = id.split("-");
+        DemArtKey demArtKey = new DemArtKey(Long.valueOf((parts[0])), Long.valueOf(parts[1]));
+        DemArt updatedDemArt = demArtService.updateDemArtPartially(demArtKey, demArtDetails);
+        return ResponseEntity.ok(updatedDemArt);
+    }
 
     // This returns a json with the user information
     /*@GetMapping(path = "/{id}")
@@ -38,6 +53,8 @@ public class DemArtController {
         DemArt demArt = demArtService.findDemArt(id);
         return ResponseEntity.ok().body(demArt);
     }*/
+
+
     @GetMapping(path = "/{demandId}/{articleId}")
     public ResponseEntity<DemArt> findDemArt(
             @PathVariable(value = "demandId") String demandId,
@@ -53,5 +70,15 @@ public class DemArtController {
     public @ResponseBody Iterable<DemArt> getAllDemArts() {
         // This returns a JSON or XML with the users
         return demArtService.getAllDemArts();
+    }
+
+    // DELETE
+    @DeleteMapping(path = "/{idDemArt}")
+    public @ResponseBody String deleteDemArt(@PathVariable("idDemArt") String id) {
+        String[] parts = id.split("-");
+        DemArtKey demArtKey = new DemArtKey(Long.valueOf((parts[0])), Long.valueOf(parts[1]));
+        demArtService.deleteDemArt(demArtKey);
+
+        return String.format("DemArt %s deleted ", id);
     }
 }

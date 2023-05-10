@@ -23,7 +23,6 @@ public class DemArtKey implements Serializable {
 
     }
 
-
     public long getIdDemand() {
         return idDemand;
     }
