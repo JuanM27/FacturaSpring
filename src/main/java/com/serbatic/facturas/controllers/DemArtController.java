@@ -41,7 +41,7 @@ public class DemArtController {
     public ResponseEntity<DemArt> updateDemArtPartially(@PathVariable(value = "idDemArt") String id,
                                                         @RequestBody DemArt demArtDetails) throws ResourceNotFoundException {
         String[] parts = id.split("-");
-        DemArtKey demArtKey = new DemArtKey(Long.valueOf((parts[0])), Long.valueOf(parts[1]));
+        DemArtKey demArtKey = new DemArtKey( Long.valueOf(parts[1]),Long.valueOf((parts[0])));
         DemArt updatedDemArt = demArtService.updateDemArtPartially(demArtKey, demArtDetails);
         return ResponseEntity.ok(updatedDemArt);
     }
