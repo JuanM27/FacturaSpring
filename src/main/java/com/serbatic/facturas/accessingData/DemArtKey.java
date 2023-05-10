@@ -7,6 +7,21 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class DemArtKey implements Serializable {
 
+  @Column(name = "id_demand")
+  long idDemand;
+
+  @Column(name = "id_art")
+  long idArt;
+
+  public DemArtKey(Long idArt, Long idDemand) {
+    this.idArt = idArt;
+    this.idDemand = idDemand;
+  }
+
+  public DemArtKey() {
+
+  }
+
   public long getIdDemand() {
     return idDemand;
   }
@@ -15,8 +30,6 @@ public class DemArtKey implements Serializable {
     this.idDemand = idDemand;
   }
 
-  @Column(name = "id_demand")
-  long idDemand;
 
   public long getIdArt() {
     return idArt;
@@ -25,7 +38,4 @@ public class DemArtKey implements Serializable {
   public void setIdArt(long idArt) {
     this.idArt = idArt;
   }
-
-  @Column(name = "id_art")
-  long idArt;
 }

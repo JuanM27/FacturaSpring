@@ -21,17 +21,17 @@ public class DemArtService implements DemArtServiceInterface {
 
   @Override
   public DemArt addNewDemArt(Long art, Long demId, int amount) {
+
     DemArt demArt = new DemArt();
     Demand demand = demandService.findDemand(demId);
     Article article = articleService.findArticle(art);
     demArt.setAmount(amount);
     demArt.setArticle(article);
     demArt.setDemand(demand);
-    DemArtKey demArtKey = new DemArtKey();
-    demArtKey.setIdArt(article.getId());
-    demArtKey.setIdDemand(demand.getId());
+    DemArtKey demArtKey = new DemArtKey(article.getId(), demand.getId());
     demArt.setId(demArtKey);
     return demArtRepository.save(demArt);
+
   }
 
   @Override
