@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 @Controller
@@ -29,7 +30,7 @@ public class InvoiceController {
     public @ResponseBody String addNewInvoice(@RequestParam Demand demand) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
-        Invoice savedInvoice = invoiceService.addNewInvoice(LocalDate.now().toString(), demand);
+        Invoice savedInvoice = invoiceService.addNewInvoice(Date.valueOf(LocalDate.now()), demand);
         if(savedInvoice==null){
             return "Error, invoice of demand with ID "+demand.getId()+" could not be added because it is invoiced already or stock is not enough";
         }

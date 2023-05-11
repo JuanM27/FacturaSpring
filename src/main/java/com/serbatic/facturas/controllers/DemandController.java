@@ -1,6 +1,5 @@
 package com.serbatic.facturas.controllers;
 
-import java.time.LocalDate;
 
 import com.serbatic.facturas.service.DemandService;
 import org.apache.velocity.exception.ResourceNotFoundException;
@@ -19,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.serbatic.facturas.accessingData.Demand;
 import com.serbatic.facturas.accessingData.DemandRepository;
 import com.serbatic.facturas.accessingData.User;
+import java.sql.Date;
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping(path = "/demand")
@@ -27,13 +28,29 @@ public class DemandController {
 @Autowired
 private DemandService demandService;
 
-  @PostMapping(path = "/add") // Map ONLY POST Requests
+  /*@PostMapping(path = "/add") // Map ONLY POST Requests
   public @ResponseBody String addNewUser(@RequestParam User user) {
     // @ResponseBody means the returned String is the response, not a view name
     // @RequestParam means it is a parameter from the GET or POST request
-  Demand savedDemand=demandService.addNewDemand(LocalDate.now().toString(), user);
+  Demand savedDemand=demandService.addNewDemand(Date.valueOf(LocalDate.now()), user);
 
     return "Demand saved with id "+savedDemand.getId();
+  }*/
+
+  @PostMapping(path = "/add") // Map ONLY POST Requests
+  public @ResponseBody String addNewDemand(@RequestParam User user) {
+    // @ResponseBody means the returned String is the response, not a view name
+    // @RequestParam means it is a parameter from the GET or POST request
+    LocalDate dischargeDate = LocalDate.parse(user.getDischargeDate());
+
+    if (LocalDate.now().isAfter(dischargeDate) || LocalDate.now().isEqual(dischargeDate)) {
+      return "Cannot create the demand with user " + user.getId() + " because is discharged.";
+    } else {
+      Demand savedDemand = demandService.addNewDemand(Date.valueOf(LocalDate.now()), user);
+
+      return "Demand saved with id " + savedDemand.getId();
+    }
+
   }
 
   @PatchMapping(path = "/{idDemand}") // Map ONLY PATCH Requests
@@ -67,5 +84,11 @@ private DemandService demandService;
   public @ResponseBody Iterable<Demand> getAllDemands() {
     // This returns a JSON or XML with the users
     return demandService.getAllDemands();
+  }
+
+  // Show only non invoice demands
+  @GetMapping(path = "/noinvoiced")
+  public @ResponseBody Iterable<Demand> getNoInvoiced(){
+    return demandService.getNoInvoiced();
   }
 }

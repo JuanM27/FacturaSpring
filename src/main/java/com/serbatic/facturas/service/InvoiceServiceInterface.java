@@ -4,8 +4,10 @@ import com.serbatic.facturas.accessingData.Demand;
 import com.serbatic.facturas.accessingData.Invoice;
 import org.apache.velocity.exception.ResourceNotFoundException;
 
+import java.sql.Date;
+
 public interface InvoiceServiceInterface {
-    Invoice addNewInvoice(String date,Demand demand);
+    Invoice addNewInvoice(Date date, Demand demand);
 
     Invoice updateInvoicePartially(Long invId, Invoice invDetails) throws ResourceNotFoundException;
 

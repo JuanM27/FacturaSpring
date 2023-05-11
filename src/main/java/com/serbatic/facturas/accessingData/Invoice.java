@@ -2,6 +2,8 @@ package com.serbatic.facturas.accessingData;
 
 import jakarta.persistence.*;
 
+import java.sql.Date;
+
 @Entity
 public class Invoice {
 
@@ -9,17 +11,18 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idInvoice;
 
-    private String date;
+    @Temporal(TemporalType.DATE)
+    private Date date;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name="idDemand")
     private Demand demand;
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

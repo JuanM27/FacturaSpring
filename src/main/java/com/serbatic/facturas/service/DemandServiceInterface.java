@@ -5,10 +5,11 @@ import com.serbatic.facturas.accessingData.Demand;
 import com.serbatic.facturas.accessingData.User;
 import org.apache.velocity.exception.ResourceNotFoundException;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public interface DemandServiceInterface {
-    Demand addNewDemand(String date, User user);
+    Demand addNewDemand(Date date, User user);
 
     Demand updateDemandPartially(Long artId, Demand demDetails) throws ResourceNotFoundException;
 

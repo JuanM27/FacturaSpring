@@ -5,6 +5,7 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 @Service
@@ -20,7 +21,7 @@ public class InvoiceService implements InvoiceServiceInterface{
     private InvoiceRepository invoiceRepository;
 
     @Override
-    public Invoice addNewInvoice(String date, Demand demand) {
+    public Invoice addNewInvoice(Date date, Demand demand) {
         Invoice inv = new Invoice();
         inv.setDate(date);
         demand.setInvoiced(true);

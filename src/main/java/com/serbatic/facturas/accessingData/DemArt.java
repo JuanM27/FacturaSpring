@@ -7,13 +7,14 @@ public class DemArt {
     @EmbeddedId
     DemArtKey id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @MapsId("idDemand")
     @JoinColumn(name="id_demand")
     Demand demand;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH) // Sirve por si en algun momento queremos añadir la funcion de cambiar el ID del pedido (por ejemplo para reasignar un
+    //                                          pedido a otro usuario).
     @MapsId("idArt") //Sirve para indicar que forma parte de una PK compuesta
     @JoinColumn(name="id_art")
     Article article;

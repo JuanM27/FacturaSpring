@@ -7,13 +7,16 @@ import com.serbatic.facturas.accessingData.User;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DemandService implements  DemandServiceInterface{
     @Autowired
     private DemandRepository demandRepository;
     @Override
-    public Demand addNewDemand(String date, User user) {
+    public Demand addNewDemand(Date date, User user) {
         Demand dem=new Demand();
         dem.setDate(date);
         dem.setUser(user);
@@ -48,5 +51,15 @@ public class DemandService implements  DemandServiceInterface{
     @Override
     public Iterable<Demand> getAllDemands() {
         return demandRepository.findAll();
+    }
+
+    public Iterable<Demand> getNoInvoiced() {
+        List<Demand> demands = new ArrayList<>();
+        for (Demand iterabledemand : demandRepository.findAll()) {
+            if (!iterabledemand.isInvoiced()) {
+                demands.add(iterabledemand);
+            }
+        }
+        return demands;
     }
 }

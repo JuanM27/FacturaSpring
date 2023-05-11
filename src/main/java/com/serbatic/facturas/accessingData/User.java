@@ -1,9 +1,9 @@
 package com.serbatic.facturas.accessingData;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class User {
@@ -11,12 +11,20 @@ public class User {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
+  @Column(length = 25)
+  @Size(min = 1, max = 25)
   private String name;
 
+  @Column(length = 25)
+  @Size(min = 1, max = 25)
   private String firstSurname;
 
+  @Column(length = 25)
+  @Size(min = 1, max = 25)
   private String secondSurname;
 
+  @Column(length = 106)
+  @Size(min = 1, max = 106)
   private String email;
 
   public Long getId() {
@@ -58,4 +66,6 @@ public class User {
   public void setEmail(String email) {
     this.email = email;
   }
+
+  private @Getter @Setter String dischargeDate;
 }

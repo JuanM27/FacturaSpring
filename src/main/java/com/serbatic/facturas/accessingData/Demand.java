@@ -1,11 +1,9 @@
 package com.serbatic.facturas.accessingData;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
+import java.sql.Date;
+
 
 @Entity
 public class Demand {
@@ -14,11 +12,12 @@ public class Demand {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long idDemand;
 
-  private String date;
+  @Temporal(TemporalType.DATE)
+  private Date date;
 
   private boolean invoiced=false;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.REFRESH)
   @JoinColumn(name = "user_id")
   private User user;
 
@@ -30,11 +29,11 @@ public class Demand {
     this.idDemand = id;
   }
 
-  public String getDate() {
+  public Date getDate() {
     return date;
   }
 
-  public void setDate(String date) {
+  public void setDate(Date date) {
     this.date = date;
   }
 
