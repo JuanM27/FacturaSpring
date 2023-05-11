@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.serbatic.facturas.accessingData.Demand;
-import com.serbatic.facturas.accessingData.DemandRepository;
 import com.serbatic.facturas.accessingData.User;
-import java.sql.Date;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Controller
 @RequestMapping(path = "/demand")
@@ -41,13 +39,14 @@ private DemandService demandService;
   public @ResponseBody String addNewDemand(@RequestParam User user) {
     // @ResponseBody means the returned String is the response, not a view name
     // @RequestParam means it is a parameter from the GET or POST request
-    LocalDate dischargeDate = LocalDate.parse(user.getDischargeDate());
-
-    if (LocalDate.now().isAfter(dischargeDate) || LocalDate.now().isEqual(dischargeDate)) {
+    Date dischargeDate = user.getDischargeDate();
+    if(dischargeDate==null){
+      Demand savedDemand = demandService.addNewDemand(new Date(), user);
+      return "Demand saved with id " + savedDemand.getIdDemand();
+    }else if (new Date().after(dischargeDate) || new Date().equals(dischargeDate)) {
       return "Cannot create the demand with user " + user.getId() + " because is discharged.";
     } else {
-      Demand savedDemand = demandService.addNewDemand(Date.valueOf(LocalDate.now()), user);
-
+      Demand savedDemand = demandService.addNewDemand(new Date(), user);
       return "Demand saved with id " + savedDemand.getIdDemand();
     }
 

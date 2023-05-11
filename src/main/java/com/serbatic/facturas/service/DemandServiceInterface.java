@@ -1,12 +1,10 @@
 package com.serbatic.facturas.service;
 
-import com.serbatic.facturas.accessingData.Article;
 import com.serbatic.facturas.accessingData.Demand;
 import com.serbatic.facturas.accessingData.User;
 import org.apache.velocity.exception.ResourceNotFoundException;
 
-import java.sql.Date;
-import java.time.LocalDate;
+import java.util.Date;
 
 public interface DemandServiceInterface {
     Demand addNewDemand(Date date, User user);

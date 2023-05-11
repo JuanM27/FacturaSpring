@@ -2,7 +2,7 @@ package com.serbatic.facturas.accessingData;
 
 import jakarta.persistence.*;
 
-import java.sql.Date;
+import java.util.Date;
 
 
 @Entity

@@ -1,6 +1,5 @@
 package com.serbatic.facturas.controllers;
 
-import com.serbatic.facturas.accessingData.Article;
 import com.serbatic.facturas.accessingData.Demand;
 import com.serbatic.facturas.accessingData.Invoice;
 import com.serbatic.facturas.service.InvoiceService;
@@ -10,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.time.LocalDate;
 
 @Controller
@@ -30,7 +29,7 @@ public class InvoiceController {
     public @ResponseBody String addNewInvoice(@RequestParam Demand demand) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
-        Invoice savedInvoice = invoiceService.addNewInvoice(Date.valueOf(LocalDate.now()), demand);
+        Invoice savedInvoice = invoiceService.addNewInvoice(new Date(), demand);
         if(savedInvoice==null){
             return "Error, invoice of demand with ID "+demand.getIdDemand()+" could not be added because it is invoiced already or stock is not enough";
         }

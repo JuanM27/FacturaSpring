@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity // This tells Hibernate to make a table out of this class
 public class User {
   @Getter
@@ -37,5 +39,6 @@ public class User {
   @Size(min = 1, max = 106)
   private String email;
 
-  private @Getter @Setter String dischargeDate;
+  @Temporal(TemporalType.DATE)
+  private @Getter @Setter Date dischargeDate;
 }
