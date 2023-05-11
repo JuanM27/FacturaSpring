@@ -31,7 +31,7 @@ public class DemArtService implements DemArtServiceInterface{
             System.out.println( "Cannot add because there are only "+article.getStock()+" of "+ article.getName()+" in stock");
             return null;
         }
-        DemArtKey demArtKey=new DemArtKey(demArt.getDemand().getId(),demArt.getArticle().getId());
+        DemArtKey demArtKey=new DemArtKey(demArt.getDemand().getIdDemand(),demArt.getArticle().getIdArt());
         demArt.setId(demArtKey);
         return demArtRepository.save(demArt);
     }

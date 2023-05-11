@@ -48,7 +48,7 @@ private DemandService demandService;
     } else {
       Demand savedDemand = demandService.addNewDemand(Date.valueOf(LocalDate.now()), user);
 
-      return "Demand saved with id " + savedDemand.getId();
+      return "Demand saved with id " + savedDemand.getIdDemand();
     }
 
   }

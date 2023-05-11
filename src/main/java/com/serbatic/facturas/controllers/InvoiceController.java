@@ -32,7 +32,7 @@ public class InvoiceController {
         // @RequestParam means it is a parameter from the GET or POST request
         Invoice savedInvoice = invoiceService.addNewInvoice(Date.valueOf(LocalDate.now()), demand);
         if(savedInvoice==null){
-            return "Error, invoice of demand with ID "+demand.getId()+" could not be added because it is invoiced already or stock is not enough";
+            return "Error, invoice of demand with ID "+demand.getIdDemand()+" could not be added because it is invoiced already or stock is not enough";
         }
         return "Invoice saved with id " + savedInvoice.getIdInvoice();
     }

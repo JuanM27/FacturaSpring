@@ -23,7 +23,7 @@ public class DemArtController {
         if(savedDemArt==null){
             return "Cannot save DemArt because the amount is not valid";
         }
-        return "DemArt saved with "+savedDemArt.getAmount()+" articles with id "+savedDemArt.getArticle().getId()+" in demand with id "+savedDemArt.getDemand().getId();
+        return "DemArt saved with "+savedDemArt.getAmount()+" articles with id "+savedDemArt.getArticle().getIdArt()+" in demand with id "+savedDemArt.getDemand().getIdDemand();
     }
 
     //Marco's VERSION:

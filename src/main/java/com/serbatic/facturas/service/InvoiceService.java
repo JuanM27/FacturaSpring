@@ -26,7 +26,7 @@ public class InvoiceService implements InvoiceServiceInterface{
         inv.setDate(date);
         demand.setInvoiced(true);
         inv.setDemand(demand);
-        demandService.updateDemandPartially(demand.getId(), demand);
+        demandService.updateDemandPartially(demand.getIdDemand(), demand);
         return invoiceRepository.save(inv);
     }
 

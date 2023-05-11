@@ -35,7 +35,7 @@ public class ArticleController {
     // @ResponseBody means the returned String is the response, not a view name
     // @RequestParam means it is a parameter from the GET or POST request
     Article savedArticle= articleService.addNewArticle(name,category,stock,price);
-    return "Article saved with id "+savedArticle.getId();
+    return "Article saved with id "+savedArticle.getIdArt();
   }
 
   @PatchMapping(path = "/{idArt}") // Map ONLY PATCH Requests
