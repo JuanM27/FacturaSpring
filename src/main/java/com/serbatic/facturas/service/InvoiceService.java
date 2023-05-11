@@ -17,30 +17,14 @@ public class InvoiceService implements InvoiceServiceInterface{
     @Autowired
     private DemandService demandService;
     @Autowired
-    private ArticleService articleService;
-    @Autowired
     private InvoiceRepository invoiceRepository;
 
     @Override
     public Invoice addNewInvoice(String date, Demand demand) {
         Invoice inv = new Invoice();
         inv.setDate(date);
-        inv.setDemand(demand);
-        Iterable<DemArt> demArts = demArtService.getAllDemArts();
-        for (DemArt dem : demArts) {
-            if (dem.getDemand().getId() == demand.getId()) {
-                if (dem.getDemand().isInvoiced()) {
-                    return null;
-                } else if (dem.getArticle().getStock() - dem.getAmount() >= 0) {
-                    dem.getArticle().setStock(dem.getArticle().getStock() - dem.getAmount());
-                    articleService.updateArticlePartially(dem.getArticle().getId(), dem.getArticle());
-                } else {
-                    return null;
-                }
-
-            }
-        }
         demand.setInvoiced(true);
+        inv.setDemand(demand);
         demandService.updateDemandPartially(demand.getId(), demand);
         return invoiceRepository.save(inv);
     }
