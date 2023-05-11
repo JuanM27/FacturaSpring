@@ -1,23 +1,47 @@
 package com.serbatic.facturas.service;
 
-import com.serbatic.facturas.accessingData.Article;
-import com.serbatic.facturas.accessingData.Demand;
-import com.serbatic.facturas.accessingData.Invoice;
-import com.serbatic.facturas.accessingData.InvoiceRepository;
+import com.serbatic.facturas.accessingData.*;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class InvoiceService implements InvoiceServiceInterface{
 
     @Autowired
+    private DemArtService demArtService;
+
+
+    @Autowired
+    private DemandService demandService;
+    @Autowired
+    private ArticleService articleService;
+    @Autowired
     private InvoiceRepository invoiceRepository;
+
     @Override
     public Invoice addNewInvoice(String date, Demand demand) {
-        Invoice inv=new Invoice();
+        Invoice inv = new Invoice();
         inv.setDate(date);
         inv.setDemand(demand);
+        Iterable<DemArt> demArts = demArtService.getAllDemArts();
+        for (DemArt dem : demArts) {
+            if (dem.getDemand().getId() == demand.getId()) {
+                if (dem.getDemand().isInvoiced()) {
+                    return null;
+                } else if (dem.getArticle().getStock() - dem.getAmount() >= 0) {
+                    dem.getArticle().setStock(dem.getArticle().getStock() - dem.getAmount());
+                    articleService.updateArticlePartially(dem.getArticle().getId(), dem.getArticle());
+                } else {
+                    return null;
+                }
+
+            }
+        }
+        demand.setInvoiced(true);
+        demandService.updateDemandPartially(demand.getId(), demand);
         return invoiceRepository.save(inv);
     }
 

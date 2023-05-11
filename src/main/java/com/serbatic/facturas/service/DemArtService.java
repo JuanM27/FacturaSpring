@@ -26,7 +26,6 @@ public class DemArtService implements DemArtServiceInterface{
         //consultar la cantidad disponible, si no hay suficiente error
         if(article.getStock()>=amount){
             demArt.setAmount(amount);
-            article.setStock(article.getStock()-amount);
         }else{
             System.out.println( "Cannot add because there are only "+article.getStock()+" of "+ article.getName()+" in stock");
             return null;
@@ -68,5 +67,5 @@ public class DemArtService implements DemArtServiceInterface{
     public Iterable<DemArt> getAllDemArts() {
         return demArtRepository.findAll();
     }
-    
+
 }

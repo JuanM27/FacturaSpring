@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @Controller
 @RequestMapping(path="/invoice")
 public class InvoiceController {
@@ -24,11 +26,13 @@ public class InvoiceController {
 
     @PostMapping(path = "/add") // Map ONLY POST Requests
 
-    public @ResponseBody String addNewInvoice(@RequestParam String date,
-                                              @RequestParam Demand demand) {
+    public @ResponseBody String addNewInvoice(@RequestParam Demand demand) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
-        Invoice savedInvoice = invoiceService.addNewInvoice(date, demand);
+        Invoice savedInvoice = invoiceService.addNewInvoice(LocalDate.now().toString(), demand);
+        if(savedInvoice==null){
+            return "Error, invoice of demand with ID "+demand.getId()+" could not be added because it is invoiced already or stock is not enough";
+        }
         return "Invoice saved with id " + savedInvoice.getIdInvoice();
     }
 

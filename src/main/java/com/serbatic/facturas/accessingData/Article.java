@@ -17,7 +17,7 @@ public class Article {
   private String category;
 
   private int stock;
-
+  
   private double price;
 
   // Getters and Setters
